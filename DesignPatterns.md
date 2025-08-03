@@ -16,7 +16,7 @@ Also, to control the singleton access we need to provide a static property that 
 
 
 Singleton Class Implementation Example 
-<pre> ```javascript
+<pre> 
 Program.cs
 
 using System;
@@ -48,7 +48,9 @@ we refer to the GetInstance property from the Singleton class
         }
     }
 }
- ``` </pre>
+ </pre>
+
+ 
 Singleton.cs
 using System;
 using System.Collections.Generic;
