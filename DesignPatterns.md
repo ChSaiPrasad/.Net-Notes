@@ -152,7 +152,7 @@ What is a nested class? A class with in another class is called a nested class. 
 Now that we have moved the derived class to nested class lets compile the program and check. Look at that we are able to compile this successfully. 
  
 Now, let’s switch to main program and access the nested class.
-
+<pre>
 Program.cs
 
 using System;
@@ -181,7 +181,7 @@ namespace SingletonDemo
         }
     }
 }
- 
+ </pre>
 Lets run the program. Look at that the counter value has incremented to 2 proving that we are able to create multiple instances of the singleton using the nested derived class.
  
 This violates the principle of singleton.  Let’s go back to the Singleton and make the class as sealed. Let’s compile the program
