@@ -50,7 +50,7 @@ we refer to the GetInstance property from the Singleton class
 }
  </pre>
 
- 
+ <pre>
 Singleton.cs
 using System;
 using System.Collections.Generic;
@@ -104,3 +104,5 @@ Public method which can be invoked through the singleton instance
             Console.WriteLine(message);
         }
     }
+
+     </pre>
