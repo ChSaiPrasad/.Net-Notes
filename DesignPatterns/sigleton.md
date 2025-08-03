@@ -293,4 +293,86 @@ Public method which can be invoked through the singleton instance
     }
 }
     </pre>
-How this c
+
+
+Lazy Initialization : The lazy initialization of an object improves the performance and avoids unnecessary computation till the point the object is accessed. Further, it reduces the memory footprint during the startup of the program. Reducing the memory print will help faster loading of the application. 
+
+Non-Lazy or Eager Loading : Eager loading is nothing but to initialize the required object before it’s being accessed.  Which means, we instantiate the object and keep it ready and use it when we need it. This type of initialization is used in lower memory footprints. Also, in eager loading, the common language runtime takes care of the variable initialization and its thread safety. Hence, we don’t need to write any explicit coding for thread safety.
+
+Singleton with Lazy keyword (.NET 4.0) : Lazy keyword provides support for lazy initialization. In order to make a property as lazy, we need to pass the type of object to the lazy keyword which is being lazily initialized. 
+
+By default, Lazy[T] objects are thread-safe.  In multi-threaded scenarios, the first thread which tries to access the Value property of the lazy object will take care of thread safety when multiple threads are trying to access the Get Instance at the same time. 
+
+Therefore, it does not matter which thread initializes the object or if there are any thread race conditions that are trying to access this property.
+<pre>
+Program.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace SingletonDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Parallel.Invoke(
+                () =] PrintStudentDetails(),
+                () =] PrintEmployeeDetails()
+            );
+            Console.ReadLine();
+        }
+
+        private static void PrintEmployeeDetails()
+        {
+            Singleton fromEmployee = Singleton.GetInstance;
+            fromEmployee.PrintDetails("From Employee");
+        }
+
+        private static void PrintStudentDetails()
+        {  
+            Singleton fromStudent = Singleton.GetInstance;
+            fromStudent.PrintDetails("From Student");
+        }
+    }
+}
+</pre>
+<pre>
+Singleton.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace SingletonDemo
+{
+   
+    public sealed class Singleton
+    {
+        private static int counter = 0;
+       
+        private Singleton()
+        {
+            counter++;
+            Console.WriteLine("Counter Value " + counter.ToString());
+        }
+        private static readonly Lazy[Singleton] instance = new Lazy[Singleton](()=]new Singleton());
+       
+        public static Singleton GetInstance
+        {
+            get
+            {
+                return instance.Value;
+            }
+        }
+       
+        public void PrintDetails(string message)
+        {
+            Console.WriteLine(message);
+        }       
+    }
+
+    </pre>
