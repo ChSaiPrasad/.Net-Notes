@@ -188,3 +188,124 @@ Lets run the program. Look at that the counter value has incremented to 2 provin
 This violates the principle of singleton.  Let’s go back to the Singleton and make the class as sealed. Let’s compile the program
  
 Look at that we have got an error when we compile the program saying we cannot derive a sealed class. With this we have proved that private constructor helps in preventing any external instantiations of objects and sealed will prevent the class inheritances.
+
+
+
+---------------------------------------------------------
+
+Lazy Initialization in Singleton : GetInstance Property is responsible for the Singleton Instance creation. Singleton object is not instantiated until and unless GetInstance is invoked. Hence, there is a delay in instance creation till the GetInstance is accessed.
+This Delay in Instance creation is called Lazy Initialization. 
+
+How to use Multithreads in Singleton : The lazy initialization works perfectly well when we invoke the GetInstance in a Single threaded approach. However, there is a chance that we may end up creating multiple instances when multiple threads invoke the GetInstance at the same time.
+
+This Thread racing situation causes thread safety issues in Singleton Initialization and further the current code ends up in creating multiple instances of Singleton objects in memory.
+
+To achieve and replicate multiple threads accessing GetInstance, We have modified the main program by using Parallel.Invoke method of .NET Framework 4.0.  Please refer to Main program code below for more details.
+
+How to implement a Thread Safe singleton class : Locks are the best way to control thread race condition and they help us to overcome the present situation. Please refer to the Singleton.cs code for lock checks and double check locking.
+
+For more details on double check locking please refer to the below article
+https://en.wikipedia.org/wiki/Double-... 
+
+<pre>
+Program.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SingletonDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Parallel.Invoke(
+                () =] PrintStudentdetails(), 
+                () =] PrintEmployeeDetails()
+                );
+            Console.ReadLine();
+        }
+
+        private static void PrintEmployeeDetails()
+        {
+            /*
+Assuming Singleton is created from employee class
+we refer to the GetInstance property from the Singleton class
+             */
+            Singleton fromEmployee = Singleton.GetInstance;
+            fromEmployee.PrintDetails("From Employee");
+        }
+
+        private static void PrintStudentdetails()
+        {
+            /*
+Assuming Singleton is created from student class
+we refer to the GetInstance property from the Singleton class
+                         */
+            Singleton fromStudent = Singleton.GetInstance;
+            fromStudent.PrintDetails("From Student");
+        }
+    }
+}
+</pre>
+
+<pre>
+Singleton.cs 
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace SingletonDemo
+{
+    /*
+Sealed restricts the inheritance
+     */
+    public sealed class Singleton
+    {
+        private static int counter = 0;
+        private static readonly object obj = new object();
+        /*
+Private constructor ensures that object is not
+instantiated other than with in the class itself
+        */
+        private Singleton()
+        {
+            counter++;
+            Console.WriteLine("Counter Value " + counter.ToString());
+        }
+        private static Singleton instance = null;
+        /*
+public property is used to return only one instance of the class
+leveraging on the private property
+         */
+        public static Singleton GetInstance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    lock (obj)
+                    {
+                        if (instance == null)
+                            instance = new Singleton();
+                    }
+                }
+                return instance;
+            }
+        }
+        /*
+Public method which can be invoked through the singleton instance
+         */
+        public void PrintDetails(string message)
+        {
+            Console.WriteLine(message);
+        }
+    }
+}
+    </pre>
+How this c
