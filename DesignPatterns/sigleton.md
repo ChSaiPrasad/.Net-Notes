@@ -376,3 +376,76 @@ namespace SingletonDemo
     }
 
     </pre>
+
+Differences between Singleton and static classes
+1. Static is a keyword and Singleton is a design pattern
+2. Static classes can contain only static members
+3. Singleton is an object creational pattern with one instance of the class
+4. Singleton can implement interfaces, inherit from other classes and it aligns with the OOPS concepts
+5. Singleton object can be passed as a reference
+6. Singleton supports object disposal
+7. Singleton object is stored on heap
+8. Singleton objects can be cloned
+
+Static class example - Temperature Converter 
+We are pretty sure that the formulas for foreign heat to Celsius conversion and vice versa will not change at all and hence we can use 
+static classes with static methods that does the conversion for us. Please refer to the below code for more details.
+
+Real world usage of Singleton : Listed are few real world scenarios for singleton usage
+1. Exception/Information logging
+2. Connection pool management 
+3. File management
+4. Device management such as printer spooling
+5. Application Configuration management
+6. Cache management
+7. And Session based shopping cart are some of the real world usage of singleton design pattern
+
+<pre>
+Program.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace StaticDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            double celcius = 37; double fahrenheit = 98.6;
+            Console.WriteLine("Value of {0} celcius to fahrenheit is {1}",
+                celcius, Converter.ToFahrenheit(celcius));
+            Console.WriteLine("Value of {0} fahrenheit to celcius is {1}",
+                fahrenheit, Converter.ToCelcius(fahrenheit));
+            Console.ReadLine();
+        }
+    }
+}
+</pre>
+<pre>
+Converter.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace StaticDemo
+{
+    public static class Converter
+    {
+        public static double ToFahrenheit(double celcius)
+        {
+            return (celcius * 9 / 5) + 32;
+        }
+        public static double ToCelcius(double fahrenheit)
+        {
+            return (fahrenheit - 32) * 5 / 9;
+        }
+    }
+}
+</pre>
