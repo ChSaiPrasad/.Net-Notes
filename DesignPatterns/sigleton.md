@@ -17,8 +17,9 @@ Also, to control the singleton access we need to provide a static property that 
 
 
 <img width="300" height="300" alt="Slide3" src="https://github.com/user-attachments/assets/26c0ebd7-78aa-4a47-8295-7328a5427dfe" />
-
+<img width="300" height="300" alt="Slide4" src="https://github.com/user-attachments/assets/d5ecebf0-c0eb-4777-ab86-fc41a695d468" />
 Singleton Class Implementation Example  
+
 
 <pre> 
 Program.cs
