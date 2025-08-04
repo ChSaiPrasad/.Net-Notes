@@ -16,7 +16,10 @@ As part of the Implementation guidelines we need to ensure that only one instanc
 Also, to control the singleton access we need to provide a static property that returns a single instance of the object.
 
 
-Singleton Class Implementation Example 
+<img width="300" height="300" alt="Slide3" src="https://github.com/user-attachments/assets/26c0ebd7-78aa-4a47-8295-7328a5427dfe" />
+
+Singleton Class Implementation Example  
+
 <pre> 
 Program.cs
 
