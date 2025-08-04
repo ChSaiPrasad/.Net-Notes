@@ -96,9 +96,9 @@ IEmployeeManager.cs
   </pre>
 
 
-<img width="1051" height="610" alt="Screenshot 2025-08-04 112319" src="https://github.com/user-attachments/assets/97ab382e-ab7a-490d-a2b8-1f0d55ca039a" />
+<img width="300" height="300" alt="Screenshot 2025-08-04 112319" src="https://github.com/user-attachments/assets/97ab382e-ab7a-490d-a2b8-1f0d55ca039a" />
 
-<img width="1042" height="571" alt="Screenshot 2025-08-04 121846" src="https://github.com/user-attachments/assets/6c869c6f-5ff7-4275-8322-cb3971ce6fc7" />
+<img width="300" height="300" alt="Screenshot 2025-08-04 121846" src="https://github.com/user-attachments/assets/6c869c6f-5ff7-4275-8322-cb3971ce6fc7" />
 
 
 
@@ -116,6 +116,118 @@ IEmployeeManager.cs
 
 
 <img width="300" height="300" alt="Screenshot 2025-08-04 122052" src="https://github.com/user-attachments/assets/b00fc9f1-6e29-47f4-82ea-8dc6c68c7d66" />
+
+
+
+Factory Method Pattern Example
+
+Business Requirement 
+<img width="300" height="300" alt="Screenshot 2025-08-04 112319" src="https://github.com/user-attachments/assets/41c54f9d-3e77-4cc2-bd71-ee456e812e8d" />
+
+1. Differentiate employees as permanent and contract and segregate their pay scales as well as bonus based on their employee types.  ( We have achieved this using simple factory 
+2. Calculate Permanent employee house rent allowance
+3. Calculate Contract employee medical allowance
+
+Steps to solve the above business requirement
+
+Step 1: Add HouseAllowance and MedicalAllowance to the existing Employee table.
+CREATE TABLE [dbo].[Employee] (
+    [Id]               INT          IDENTITY (1, 1) NOT NULL,
+    [Name]             VARCHAR (50) NOT NULL,
+    [JobDescription]   VARCHAR (50) NOT NULL,
+    [Number]           VARCHAR (50) NOT NULL,
+    [Department]       VARCHAR (50) NOT NULL,
+    [HourlyPay]        DECIMAL (18) NOT NULL,
+    [Bonus]            DECIMAL (18) NOT NULL,
+    [EmployeeTypeID]   INT          NOT NULL,
+    [HouseAllowance]   DECIMAL (18) NULL,
+    [MedicalAllowance] DECIMAL (18) NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_Employee_EmployeeType] FOREIGN KEY ([EmployeeTypeID]) REFERENCES [dbo].[Employee_Type] ([Id]) );
+
+Step 2: Open EmployeePortal.edmx under the Models folder of the solution and update the model from the database 
+
+Step 3: Create FactoryMethod folder under existing Factory folder and add BaseEmployeeFactory class.
+<pre>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Web.Managers;
+using Web.Models;
+
+namespace Web.Factory.FactoryMethod
+{
+    public abstract class BaseEmployeeFactory
+    {
+        protected Employee _emp;
+        public BaseEmployeeFactory(Employee emp)
+        {
+            _emp = emp;
+        }
+        public Employee ApplySalary()
+        {
+            IEmployeeManager manager = this.Create();
+            _emp.Bonus = manager.GetBonus();
+            _emp.HourlyPay = manager.GetPay();
+            return _emp;
+        }
+        public abstract IEmployeeManager Create();
+    }
+}
+</pre>
+Step 4: Create ContractEmployeeFactory class under FactoryMethod folder.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Web.Managers;
+using Web.Models;
+
+namespace Web.Factory.FactoryMethod
+{
+    public class ContractEmployeeFactory : BaseEmployeeFactory
+    {
+        public ContractEmployeeFactory(Employee emp) : base(emp)
+        {
+        }
+
+        public override IEmployeeManager Create()
+        {
+            ContractEmployeeManager manager = new ContractEmployeeManager();
+            _emp.MedicalAllowance = manager.GetMedicalAllowance();
+            return manager;
+        }
+    }
+}
+Step 5: Create PermanentEmployeeFactory class under FactoryMethod folder.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using Web.Managers;
+using Web.Models;
+
+namespace Web.Factory.FactoryMethod
+{
+    public class PermanentEmployeeFactory : BaseEmployeeFactory
+    {
+        public PermanentEmployeeFactory(Employee emp) : base(emp)
+        {
+        }
+
+        public override IEmployeeManager Create()
+        {
+            PermanentEmployeeManager manager = new PermanentEmployeeManager();
+            _emp.HouseAllowance = manager.GetHouseAllowance();
+            return manager;
+        }
+    }
+}
+Step 6: Create EmployeeManagerFactory class under FactoryMethod folder and add new Method CreateFactory which returns BaseEmployeeFactory. 
+CreateFactory method is responsible to return base factory which is the base class of Permanent and Contract Factories.
 
 
 
