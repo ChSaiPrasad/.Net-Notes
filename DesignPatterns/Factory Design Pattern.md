@@ -1,7 +1,4 @@
-In this session we will learn
-1. What is Factory Design Pattern
-2. Implementation Guidelines
-3. Simple factory implementation
+
 
 What is Factory Design Pattern : Gang of Four Definition 
 Define an interface for creating an object, but let subclasses decide which class to instantiate. The Factory method lets a class defer instantiation it uses to subclasses
@@ -18,11 +15,6 @@ We need to choose Factory Pattern when
 Simple Factory Example : Business Requirement
 
 Differentiate employees as permanent and contract and segregate their pay scales as well as bonus based on their employee types
-
-We can address the above requirement with the below implementations
-1. Implement without Factory Pattern
-2. Use a Simple Factory
-3. Enhance Simple factory to Factory Method Pattern
 
 We will be working on the Employee Portal that we used in the Singleton tutorials. Please refer to them before proceeding 
 
