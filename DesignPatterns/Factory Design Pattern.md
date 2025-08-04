@@ -148,89 +148,19 @@ CREATE TABLE [dbo].[Employee] (
 Step 2: Open EmployeePortal.edmx under the Models folder of the solution and update the model from the database 
 
 Step 3: Create FactoryMethod folder under existing Factory folder and add BaseEmployeeFactory class.
-<pre>
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Web.Managers;
-using Web.Models;
 
-namespace Web.Factory.FactoryMethod
-{
-    public abstract class BaseEmployeeFactory
-    {
-        protected Employee _emp;
-        public BaseEmployeeFactory(Employee emp)
-        {
-            _emp = emp;
-        }
-        public Employee ApplySalary()
-        {
-            IEmployeeManager manager = this.Create();
-            _emp.Bonus = manager.GetBonus();
-            _emp.HourlyPay = manager.GetPay();
-            return _emp;
-        }
-        public abstract IEmployeeManager Create();
-    }
-}
-</pre>
+<img width="300" height="300" alt="Screenshot 2025-08-04 112319" src="https://github.com/user-attachments/assets/0c4a26a9-5074-4f48-99b1-42b8327ebd18" />
+
 Step 4: Create ContractEmployeeFactory class under FactoryMethod folder.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Web.Managers;
-using Web.Models;
+<img width="300" height="300" alt="Screenshot 2025-08-04 112319" src="https://github.com/user-attachments/assets/6c130a87-69cf-49db-aecd-47d24146615f" />
+<img width="300" height="300" alt="Screenshot 2025-08-04 112319" src="https://github.com/user-attachments/assets/472f319b-1764-4de5-a11b-93ec124991b1" />
+<img width="300" height="300" alt="Screenshot 2025-08-04 112319" src="https://github.com/user-attachments/assets/f5c1275b-ad54-45f3-b83d-dd44d22c095e" />
+<img width="300" height="300" alt="Screenshot 2025-08-04 112319" src="https://github.com/user-attachments/assets/d5d83a8d-8139-44a3-b7b7-342d1d00aa44" />
 
-namespace Web.Factory.FactoryMethod
-{
-    public class ContractEmployeeFactory : BaseEmployeeFactory
-    {
-        public ContractEmployeeFactory(Employee emp) : base(emp)
-        {
-        }
+<img width="300" height="300" alt="Screenshot 2025-08-04 112319" src="https://github.com/user-attachments/assets/200d377f-431e-44dd-a862-370a78b37785" />
 
-        public override IEmployeeManager Create()
-        {
-            ContractEmployeeManager manager = new ContractEmployeeManager();
-            _emp.MedicalAllowance = manager.GetMedicalAllowance();
-            return manager;
-        }
-    }
-}
-Step 5: Create PermanentEmployeeFactory class under FactoryMethod folder.
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Web.Managers;
-using Web.Models;
-
-namespace Web.Factory.FactoryMethod
-{
-    public class PermanentEmployeeFactory : BaseEmployeeFactory
-    {
-        public PermanentEmployeeFactory(Employee emp) : base(emp)
-        {
-        }
-
-        public override IEmployeeManager Create()
-        {
-            PermanentEmployeeManager manager = new PermanentEmployeeManager();
-            _emp.HouseAllowance = manager.GetHouseAllowance();
-            return manager;
-        }
-    }
-}
-Step 6: Create EmployeeManagerFactory class under FactoryMethod folder and add new Method CreateFactory which returns BaseEmployeeFactory. 
-CreateFactory method is responsible to return base factory which is the base class of Permanent and Contract Factories.
-
-
-
+<img width="300" height="300" alt="Screenshot 2025-08-04 112319" src="https://github.com/user-attachments/assets/7607f2ed-b45e-423b-bbc2-ffba2be96310" />
 
 
 
